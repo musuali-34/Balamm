@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUSU♾FATIA</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Georgia', serif;
+            overflow-x: hidden;
+        }
+
+        .page {
+            min-height: 100vh;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            position: relative;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        /* Page 1 Styles */
+        .page1 {
+            background: linear-gradient(135deg, #ffc0cb, #ffb6c1, #ffa0b4);
+            animation: gradientShift 6s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page1::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: cinematicSweep 8s ease-in-out infinite;
+        }
+
+        @keyframes cinematicSweep {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: -100%; }
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background: linear-gradient(135deg, #ffc0cb, #ffb6c1, #ffa0b4); }
+            50% { background: linear-gradient(135deg, #ffb6c1, #ffa0b4, #ff91a4); }
+        }
+
+        .title {
+            font-size: 4rem;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            margin-bottom: 40px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 3px 3px 6px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.5); }
+            50% { text-shadow: 3px 3px 6px rgba(0,0,0,0.3), 0 0 30px rgba(255,255,255,0.8); }
+        }
+
+        .message-box {
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 500px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 3px solid #ff69b4;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,105,180,0.1), transparent);
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .message-text {
+            font-size: 1.3rem;
+            color: #333;
+            line-height: 1.6;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .start-btn {
+            background: linear-gradient(45deg, #32cd32, #228b22);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(50,205,50,0.4);
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(50,205,50,0.6);
+            background: linear-gradient(45deg, #228b22, #32cd32);
+        }
+
+        /* Page 2 Styles */
+        .page2 {
+            background: linear-gradient(135deg, #ffe4e1, #ffd1dc, #ffb6c1);
+            position: relative;
+        }
+
+        .page2::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(255,182,193,0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,105,180,0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 70%, rgba(255,20,147,0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .rose-frame {
+            background: rgba(255,255,255,0.95);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            border: 4px solid #ff69b4;
+            margin-bottom: 30px;
+        }
+
+        .rose {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .rose:nth-child(1) { top: -15px; left: -15px; animation-delay: 0s; }
+        .rose:nth-child(2) { top: -15px; right: -15px; animation-delay: 1s; }
+        .rose:nth-child(3) { bottom: -15px; left: -15px; animation-delay: 2s; }
+        .rose:nth-child(4) { bottom: -15px; right: -15px; animation-delay: 3s; }
+        .rose:nth-child(5) { top: 50%; left: -20px; transform: translateY(-50%); animation-delay: 0.5s; }
+        .rose:nth-child(6) { top: 50%; right: -20px; transform: translateY(-50%); animation-delay: 1.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .love-message {
+            font-size: 1.4rem;
+            color: #333;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .choice-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .choice-btn {
+            padding: 12px 30px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .yes-btn {
+            background: linear-gradient(45deg, #32cd32, #228b22);
+            color: white;
+            box-shadow: 0 6px 15px rgba(50,205,50,0.4);
+        }
+
+        .yes-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(50,205,50,0.6);
+        }
+
+        .no-btn {
+            background: linear-gradient(45deg, #dc143c, #b22222);
+            color: white;
+            box-shadow: 0 6px 15px rgba(220,20,60,0.4);
+        }
+
+        .no-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(220,20,60,0.6);
+        }
+
+        .tease-buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .tease-btn {
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .growing-yes {
+            animation: grow 0.5s ease forwards;
+        }
+
+        @keyframes grow {
+            to {
+                transform: scale(1.2);
+                font-size: 1.5rem;
+                padding: 15px 40px;
+            }
+        }
+
+        .final-yes {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            font-size: 3rem;
+            z-index: 1000;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Page 3 Styles */
+        .page3 {
+            background: linear-gradient(135deg, #ff69b4, #ff1493, #dc143c, #ff69b4);
+            background-size: 400% 400%;
+            animation: romanticGradient 8s ease infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes romanticGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .page3::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255,255,255,0.7);
+            animation: heartFloat 8s linear infinite;
+        }
+
+        .romantic-element {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: romanticFloat 12s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes romanticFloat {
+            0% {
+                transform: translateY(100vh) translateX(-50px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes heartFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .final-title {
+            font-size: 3rem;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            margin-bottom: 40px;
+            font-weight: bold;
+            text-align: center;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .final-message-box {
+            background: rgba(255,255,255,0.95);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            max-width: 700px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 4px solid #ff1493;
+            position: relative;
+            animation: gentlePulse 4s ease-in-out infinite;
+        }
+
+        @keyframes gentlePulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 0 0 0 rgba(255,20,147,0.4);
+            }
+            50% { 
+                transform: scale(1.02);
+                box-shadow: 0 25px 60px rgba(0,0,0,0.4), 0 0 20px 5px rgba(255,20,147,0.2);
+            }
+        }
+
+        .poem-text {
+            font-size: 1.3rem;
+            color: #333;
+            line-height: 1.8;
+            font-style: italic;
+            white-space: pre-line;
+            margin-bottom: 20px;
+        }
+
+        .date-text {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+                letter-spacing: 1px;
+            }
+
+            .message-box, .rose-frame, .final-message-box {
+                margin: 0 10px;
+                padding: 20px;
+            }
+
+            .message-text, .love-message, .poem-text {
+                font-size: 1.1rem;
+            }
+
+            .choice-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .final-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page 1 -->
+    <div class="page page1 active" id="page1">
+        <h1 class="title">MUSU♾FATIA</h1>
+        <div class="message-box">
+            <div class="message-text">
+                Aşk değildir güzel olan,<br>
+                Sensin aşkı güzel kılan,<br>
+                Gülüşündür en güzel çiçekleri solduran,<br>
+                Yüreğimdir baştan başa seni kokan
+            </div>
+        </div>
+        <button class="start-btn" onclick="goToPage2()">BAŞLAYAQ!</button>
+    </div>
+
+    <!-- Page 2 -->
+    <div class="page page2" id="page2">
+        <div class="rose-frame">
+            <div class="rose">🌹</div>
+            <div class="rose">🌹</div>
+            <div class="rose">🌹</div>
+            <div class="rose">🌹</div>
+            <div class="rose">🌹</div>
+            <div class="rose">🌹</div>
+            
+            <div class="love-message">
+                Fatimə, həyatım səni çox sevirəm. Sənin üçün darıxmışam. Sənsiz olmaq istəmirəm. Bir ömür birlikdə yaşayıb xoşbəxt ömür sürmək üçün yanımda olmanı istəyirəm 🤍 Barışaq mı?
+            </div>
+            
+            <div class="choice-buttons">
+                <button class="choice-btn yes-btn" id="yesBtn" onclick="goToPage3()">BƏLİ</button>
+                <button class="choice-btn no-btn" onclick="handleNo()">XEYR</button>
+            </div>
+            
+            <div class="tease-buttons" id="teaseButtons"></div>
+        </div>
+    </div>
+
+    <!-- Page 3 -->
+    <div class="page page3" id="page3">
+        <div class="hearts" id="hearts"></div>
+        
+        <h1 class="final-title">SƏNƏ SEVGİM SONSUZDUR!🤍</h1>
+        
+        <div class="final-message-box">
+            <div class="poem-text">kokunu alamadan,
+boynuna sarılamadan,
+yüzüne dokunamadan.
+sadece seviyorum.
+öyle,uzaktan seviyorum seni
+elini tutmadan,
+yüreğine dokunmadan,
+gözlerinde dalıp-dalıp gitmeden.
+şu üç günlük sevdalara inat
+serserice değil,adam gibi seviyorum</div>
+            
+            <div class="date-text">24.09.24~♾</div>
+        </div>
+    </div>
+
+    <script>
+        let noClickCount = 0;
+        const teaseMessages = [
+            "Bir də düşünnn",
+            "Son qərarındıı?",
+            "Əmin misiniz?",
+            "Yenidən düşün",
+            "Həqiqətənmi?",
+            "Daha bir şans ver",
+            "Ürəyini dinlə",
+            "Mənə güvən",
+            "Barışaq artıq",
+            "Sən mənim hər şeyimsin"
+        ];
+
+        function goToPage2() {
+            document.getElementById('page1').classList.remove('active');
+            document.getElementById('page2').classList.add('active');
+        }
+
+        function goToPage3() {
+            document.getElementById('page2').classList.remove('active');
+            document.getElementById('page3').classList.add('active');
+            createHearts();
+        }
+
+        function handleNo() {
+            const yesBtn = document.getElementById('yesBtn');
+            const teaseButtonsContainer = document.getElementById('teaseButtons');
+            
+            if (noClickCount < teaseMessages.length) {
+                // Remove previous tease button if exists
+                const existingBtn = teaseButtonsContainer.querySelector('.tease-btn');
+                if (existingBtn) {
+                    existingBtn.remove();
+                }
+                
+                // Create new tease button
+                const teaseBtn = document.createElement('button');
+                teaseBtn.className = 'tease-btn';
+                teaseBtn.textContent = teaseMessages[noClickCount];
+                teaseBtn.onclick = () => handleNo();
+                
+                teaseButtonsContainer.appendChild(teaseBtn);
+                
+                // Grow the yes button
+                yesBtn.classList.add('growing-yes');
+                
+                noClickCount++;
+                
+                // If this is the last message, make yes button take full screen
+                if (noClickCount >= teaseMessages.length) {
+                    setTimeout(() => {
+                        yesBtn.classList.add('final-yes');
+                        yesBtn.textContent = 'BƏLİ - BARIŞAQ! 💖';
+                    }, 1000);
+                }
+            }
+        }
+
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const heartSymbols = ['💖', '💕', '💗', '💓', '💝', '🤍', '❤️'];
+            const romanticElements = ['🌹', '💐', '🎵', '🎶', '✨', '🌟', '💫', '🦋', '🕊️', '💌'];
+            
+            // Create initial hearts
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    createHeart(heartsContainer, heartSymbols);
+                }, i * 300);
+            }
+            
+            // Create romantic elements inspired by music videos
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    createRomanticElement(heartsContainer, romanticElements);
+                }, i * 500);
+            }
+            
+            // Continue creating hearts and romantic elements
+            setInterval(() => {
+                createHeart(heartsContainer, heartSymbols);
+                if (Math.random() > 0.6) {
+                    createRomanticElement(heartsContainer, romanticElements);
+                }
+            }, 1000);
+        }
+
+        function createHeart(container, symbols) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            heart.style.fontSize = (Math.random() * 1 + 1.5) + 'rem';
+            
+            container.appendChild(heart);
+            
+            // Remove heart after animation
+            setTimeout(() => {
+                if (heart.parentNode) {
+                    heart.parentNode.removeChild(heart);
+                }
+            }, 8000);
+        }
+
+        function createRomanticElement(container, elements) {
+            const element = document.createElement('div');
+            element.className = 'romantic-element';
+            element.textContent = elements[Math.floor(Math.random() * elements.length)];
+            element.style.left = Math.random() * 100 + '%';
+            element.style.animationDuration = (Math.random() * 4 + 8) + 's';
+            element.style.fontSize = (Math.random() * 0.8 + 1.2) + 'rem';
+            element.style.color = `hsl(${Math.random() * 60 + 300}, 70%, 80%)`;
+            
+            container.appendChild(element);
+            
+            // Remove element after animation
+            setTimeout(() => {
+                if (element.parentNode) {
+                    element.parentNode.removeChild(element);
+                }
+            }, 12000);
+        }
+
+        // Add some sparkle effects
+        function createSparkles() {
+            const sparkles = ['✨', '⭐', '🌟', '💫'];
+            const body = document.body;
+            
+            setInterval(() => {
+                const sparkle = document.createElement('div');
+                sparkle.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+                sparkle.style.position = 'fixed';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.fontSize = '1.5rem';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.zIndex = '999';
+                sparkle.style.animation = 'sparkle 2s ease-out forwards';
+                
+                body.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    if (sparkle.parentNode) {
+                        sparkle.parentNode.removeChild(sparkle);
+                    }
+                }, 2000);
+            }, 3000);
+        }
+
+        // Add sparkle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes sparkle {
+                0% { opacity: 0; transform: scale(0) rotate(0deg); }
+                50% { opacity: 1; transform: scale(1) rotate(180deg); }
+                100% { opacity: 0; transform: scale(0) rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Start sparkles
+        createSparkles();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'987d3025d2858069',t:'MTc1OTMzNDU4NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
